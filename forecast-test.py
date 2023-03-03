@@ -73,7 +73,7 @@ def get_weather_forecast(city, open_weather_token):
 
         data3 = wfc.json()
         #проверка массива всех данных по прогнозу
-        pprint(data3)
+        #pprint(data3)
 
         #завтра какой день недели
         temper = data3["list"][7]["dt_txt"]
