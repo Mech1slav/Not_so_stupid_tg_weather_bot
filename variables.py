@@ -1,45 +1,17 @@
 import requests
-import datetime
-from config import tg_bot_token, open_weather_token
+from config import open_weather_token
 from vocabulary import weather_vocabulary_fd, weather_vocabulary, days_of_the_week
-from aiogram import Bot, types
-from aiogram.dispatcher import Dispatcher
-from aiogram.utils import executor
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+import datetime
+from pprint import pprint
 
-#обьект "bot", в который кидаем токен
-bot = Bot(token=tg_bot_token)
-#в aiogram хэндлерами управляет диспетчер, поэтому создаем обьект диспетчера и кидаем ему обьект бота
-dp = Dispatcher(bot)
-
-#проверка бота командой старт
-@dp.message_handler(commands=["start"])
-async def start_command(message: types.Message):
-
-    city_buttons = ReplyKeyboardMarkup(row_width=1)
-
-    simf_button = KeyboardButton(text='Симферополь')
-    sev_button = KeyboardButton(text='Севастополь')
-    yalta_button = KeyboardButton(text='Ялта')
-    feo_button = KeyboardButton(text='Феодосия')
-    kerch_button = KeyboardButton(text='Керчь')
-    evp_button = KeyboardButton(text='Евпатория')
-
-    city_buttons.add(simf_button, sev_button, yalta_button, feo_button, kerch_button, evp_button)
-
-    await message.answer("Привет!\nЧтобы узнать прогноз погоды на 3 дня вперед, выбери один из предложенных городов ниже, или напиши свой город", reply_markup=city_buttons)
-
-
-@dp.message_handler()
-async def get_weather_forecast(message: types.Message):
-
+def get_weather_forecast(city, open_weather_token):
     try:
         geo = requests.get(
-            f"http://api.openweathermap.org/geo/1.0/direct?q={message.text}&appid={open_weather_token}"
+            f"http://api.openweathermap.org/geo/1.0/direct?q={city}&appid={open_weather_token}"
         )
         data2 = geo.json()
         # проверка массива всех данных по координатам
-        # pprint(data2)
+        #pprint(data2)
 
         lat = data2[0]["lat"]
         lon = data2[0]["lon"]
@@ -50,7 +22,7 @@ async def get_weather_forecast(message: types.Message):
 
         data3 = wfc.json()
         # проверка массива всех данных по прогнозу
-        # pprint(data3)
+        #pprint(data3)
 
         today_mark = datetime.date.today()
         today_mark_v2 = today_mark.weekday()
@@ -79,14 +51,14 @@ async def get_weather_forecast(message: types.Message):
         else:
             pass
 
-        date01 = data3["list"][5]["dt_txt"]  # min for correct_tomorrow_mid_time
+        date01 = data3["list"][5]["dt_txt"] # min for correct_tomorrow_mid_time
         date02 = data3["list"][6]["dt_txt"]
         date03 = data3["list"][7]["dt_txt"]
         date04 = data3["list"][8]["dt_txt"]
         date05 = data3["list"][9]["dt_txt"]
         date06 = data3["list"][10]["dt_txt"]
         date07 = data3["list"][11]["dt_txt"]
-        date08 = data3["list"][12]["dt_txt"]  # max for correct_tomorrow_mid_time
+        date08 = data3["list"][12]["dt_txt"] # max for correct_tomorrow_mid_time
 
         mid_time_mark = "12:00:00"
         tomorrow_mark_vv = today_mark + datetime.timedelta(days=1)
@@ -364,7 +336,7 @@ async def get_weather_forecast(message: types.Message):
         else:
             wd_after_after_tomorrow_evening = wd_after_after_tomorrow_ev
 
-        await message.answer(f"Держи прогноз погоды на 3 дня! \n",
+        print(f"Держи прогноз погоды на 3 дня! \n",
               f"\n",
               f"Завтра {tomorrow_comp} \n",
               f"В полдень будет {wd_tomorrow_midday} \n",
@@ -372,22 +344,17 @@ async def get_weather_forecast(message: types.Message):
               f"Температура {temp_tomorrow} \n",
               f"Скорость ветра {wind_speed_tomorrow} км/ч \n",
               f"\n",
-              f"Послезавтра {after_tomorrow_comp} \n"
-              f"В полдень будет {wd_after_tomorrow_midday} \n"
-              f"Вечером - {wd_after_tomorrow_evening} \n"
-              f"Температура {temp_after_tomorrow} \n"
-              f"Скорость ветра {wind_speed_after_tomorrow} км/ч\n"
-              f"\n"
-              f"{after_after_tomorrow_comp} \n"
-              f"В полдень будет {wd_after_after_tomorrow_midday} \n"
-              f"Вечером - {wd_after_after_tomorrow_evening} \n"
-              f"Температура {temp_after_after_tomorrow} \n"
-              f"Скорость ветра {wind_speed_after_after_tomorrow} км/ч\n"
-              )
+              f"Послезавтра {after_tomorrow_comp} \n",
+              f"В полдень будет {wd_after_tomorrow_midday} \n",
+              f"Вечером - {wd_after_tomorrow_evening} \n",
+              f"Температура {temp_after_tomorrow} \n",
+              f"Скорость ветра {wind_speed_after_tomorrow} км/ч\n",
+              f"\n",
+              f"{after_after_tomorrow_comp} \n",
+              f"В полдень будет {wd_after_after_tomorrow_midday} \n",
+              f"Вечером - {wd_after_after_tomorrow_evening} \n",
+              f"Температура {temp_after_after_tomorrow} \n",
+              f"Скорость ветра {wind_speed_after_after_tomorrow} км/ч\n")
 
-    except: error = "error"
-    await message.answer(error)
-
-
-if __name__ == '__main__':
-    executor.start_polling(dp)
+    except:
+        print(f"Проверьте название города")
