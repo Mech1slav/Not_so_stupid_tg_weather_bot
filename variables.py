@@ -285,7 +285,6 @@ def get_weather_forecast(city, open_weather_token):
         if wfdte in weather_vocabulary_fd:
             wd_tomorrow_ev = weather_vocabulary_fd[wfdte]
         else:
-            # если подробного описания нет в словане - показывает краткое
             wdte in weather_vocabulary
             wd_tomorrow_ev = weather_vocabulary[wdte]
 
@@ -336,25 +335,25 @@ def get_weather_forecast(city, open_weather_token):
         else:
             wd_after_after_tomorrow_evening = wd_after_after_tomorrow_ev
 
-        print(f"Держи прогноз погоды на 3 дня! \n",
-              f"\n",
-              f"Завтра {tomorrow_comp} \n",
-              f"В полдень будет {wd_tomorrow_midday} \n",
-              f"Вечером - {wd_tomorrow_evening}\n",
-              f"Температура {temp_tomorrow} \n",
-              f"Скорость ветра {wind_speed_tomorrow} км/ч \n",
-              f"\n",
-              f"Послезавтра {after_tomorrow_comp} \n",
-              f"В полдень будет {wd_after_tomorrow_midday} \n",
-              f"Вечером - {wd_after_tomorrow_evening} \n",
-              f"Температура {temp_after_tomorrow} \n",
-              f"Скорость ветра {wind_speed_after_tomorrow} км/ч\n",
-              f"\n",
-              f"{after_after_tomorrow_comp} \n",
-              f"В полдень будет {wd_after_after_tomorrow_midday} \n",
-              f"Вечером - {wd_after_after_tomorrow_evening} \n",
-              f"Температура {temp_after_after_tomorrow} \n",
-              f"Скорость ветра {wind_speed_after_after_tomorrow} км/ч\n")
+        print(
+            f"Держи прогноз погоды на 3 дня! \n \n"
+            f"Погода в городе {city} \n \n"
+            f"Завтра {tomorrow_comp} \n"
+            f"В полдень будет {wd_tomorrow_midday} \n"
+            f"Вечером - {wd_tomorrow_evening}\n"
+            f"Температура {temp_tomorrow} \n"
+            f"Скорость ветра {wind_speed_tomorrow} км/ч \n \n"
+            f"Послезавтра {after_tomorrow_comp} \n"
+            f"В полдень будет {wd_after_tomorrow_midday} \n"
+            f"Вечером - {wd_after_tomorrow_evening} \n"
+            f"Температура {temp_after_tomorrow} \n"
+            f"Скорость ветра {wind_speed_after_tomorrow} км/ч\n \n"
+            f"{after_after_tomorrow_comp} \n"
+            f"В полдень будет {wd_after_after_tomorrow_midday} \n"
+            f"Вечером - {wd_after_after_tomorrow_evening} \n"
+            f"Температура {temp_after_after_tomorrow} \n"
+            f"Скорость ветра {wind_speed_after_after_tomorrow} км/ч\n"
+        )
 
     except:
         print(f"Проверьте название города")

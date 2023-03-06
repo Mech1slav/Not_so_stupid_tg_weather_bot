@@ -269,7 +269,7 @@ async def get_weather_forecast(message: types.Message):
             wfdte3 = data3["list"][30]["weather"][0]["description"]
             wdte3 = data3["list"][30]["weather"][0]["main"]
         else:
-            print("\n")
+            pass
 
         # температура завтра
         zero_temp = "0"
@@ -313,7 +313,6 @@ async def get_weather_forecast(message: types.Message):
         if wfdte in weather_vocabulary_fd:
             wd_tomorrow_ev = weather_vocabulary_fd[wfdte]
         else:
-            # если подробного описания нет в словане - показывает краткое
             wdte in weather_vocabulary
             wd_tomorrow_ev = weather_vocabulary[wdte]
 
@@ -364,29 +363,27 @@ async def get_weather_forecast(message: types.Message):
         else:
             wd_after_after_tomorrow_evening = wd_after_after_tomorrow_ev
 
-        await message.answer(f"Держи прогноз погоды на 3 дня! \n",
-              f"\n",
-              f"Завтра {tomorrow_comp} \n",
-              f"В полдень будет {wd_tomorrow_midday} \n",
-              f"Вечером - {wd_tomorrow_evening}\n",
-              f"Температура {temp_tomorrow} \n",
-              f"Скорость ветра {wind_speed_tomorrow} км/ч \n",
-              f"\n",
-              f"Послезавтра {after_tomorrow_comp} \n"
-              f"В полдень будет {wd_after_tomorrow_midday} \n"
-              f"Вечером - {wd_after_tomorrow_evening} \n"
-              f"Температура {temp_after_tomorrow} \n"
-              f"Скорость ветра {wind_speed_after_tomorrow} км/ч\n"
-              f"\n"
-              f"{after_after_tomorrow_comp} \n"
-              f"В полдень будет {wd_after_after_tomorrow_midday} \n"
-              f"Вечером - {wd_after_after_tomorrow_evening} \n"
-              f"Температура {temp_after_after_tomorrow} \n"
-              f"Скорость ветра {wind_speed_after_after_tomorrow} км/ч\n"
-              )
-
-    except: error = "error"
-    await message.answer(error)
+        await message.answer(
+            f"Держи прогноз погоды на 3 дня! \n \n"
+            f"Погода в городе {message.text} \n \n"
+            f"Завтра {tomorrow_comp} \n"
+            f"В полдень будет {wd_tomorrow_midday} \n"
+            f"Вечером - {wd_tomorrow_evening}\n"
+            f"Температура {temp_tomorrow} \n"
+            f"Скорость ветра {wind_speed_tomorrow} км/ч \n \n"
+            f"Послезавтра {after_tomorrow_comp} \n"
+            f"В полдень будет {wd_after_tomorrow_midday} \n"
+            f"Вечером - {wd_after_tomorrow_evening} \n"
+            f"Температура {temp_after_tomorrow} \n"
+            f"Скорость ветра {wind_speed_after_tomorrow} км/ч\n \n"
+            f"{after_after_tomorrow_comp} \n"
+            f"В полдень будет {wd_after_after_tomorrow_midday} \n"
+            f"Вечером - {wd_after_after_tomorrow_evening} \n"
+            f"Температура {temp_after_after_tomorrow} \n"
+            f"Скорость ветра {wind_speed_after_after_tomorrow} км/ч\n"
+        )
+    except:
+        pass
 
 
 if __name__ == '__main__':
